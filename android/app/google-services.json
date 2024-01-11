@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154197803287",
+    "project_id": "ibnziad-96d87",
+    "storage_bucket": "ibnziad-96d87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154197803287:android:4de138f4781cd21aceb752",
+        "android_client_info": {
+          "package_name": "com.example.ibnziad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACN8doXcI475edrY3cjx6wSQgy9aGGFZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

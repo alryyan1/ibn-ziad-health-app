@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ibnziad/controllers/OnBoardPageController.dart';
 
@@ -19,7 +20,7 @@ class First extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'مركز ابن زياد ',
+              'مركز ابن زياد'.tr,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.displaySmall,
             ),
@@ -38,7 +39,7 @@ class First extends StatelessWidget {
             SizedBox(
               height: 70,
             ),
-            Text('  مرحبا بكم في مركز اب زياد الطبي  ',
+            Text('مرحبا بكم في مركز ابن زياد الطبي'.tr,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30)),
             const Spacer(),
@@ -56,7 +57,7 @@ class First extends StatelessWidget {
                   print(controller.currentPage);
                   controller.next();
                 },
-                child: const Text('التالي'),
+                child:  Text('التالي'.tr),
               ),
             )
           ],

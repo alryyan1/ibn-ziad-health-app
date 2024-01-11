@@ -22,7 +22,7 @@ class Second extends StatelessWidget {
               height: 60,
             ),
             Text(
-              ' شكرا لكم  ',
+              'شكرا لكم'.tr,
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
@@ -44,9 +44,21 @@ class Second extends StatelessWidget {
             SizedBox(
               height: 70,
             ),
-            Text('  عيادات اخصائيين - عمومي - المختبر ',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30)),
+            Text(
+              'عيادات اخصائيين'.tr,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30),
+            ),
+            Text(
+              'المختبر'.tr,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30),
+            ),
+            Text(
+              'موجات صوتيه'.tr,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30),
+            ),
             const Spacer(),
             Container(
               height: 55,
@@ -58,9 +70,10 @@ class Second extends StatelessWidget {
                       MaterialStateColor.resolveWith((states) => Colors.green),
                 ),
                 onPressed: () {
-                  controller.next();
+                  print('clicked');
+                  Get.offNamed('/home');
                 },
-                child: const Text('التالي'),
+                child: const Text('الرئيسيه'),
               ),
             )
           ],

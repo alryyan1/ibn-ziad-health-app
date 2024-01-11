@@ -1,12 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ibnziad/constants.dart';
-import 'package:ibnziad/controllers/OnBoardPageController.dart';
-import 'package:ibnziad/on-boarding/first_page.dart';
-import 'package:ibnziad/on-boarding/second_page.dart';
-import 'package:ibnziad/on-boarding/third_page.dart';
+import 'export.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -17,17 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        getPages: [
-          GetPage(
-              name: '/home',
-              page: () {
-                return OnBoarding();
-              })
-        ],
+        translations: AppTranslator(),
+        locale: Get.deviceLocale,
+        getPages: pages,
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Ibn Ziad Medical Center',
         theme: theme,
-        initialRoute: '/home');
+        initialRoute: '/onBoarding');
   }
 }
 
@@ -42,7 +34,7 @@ class OnBoarding extends StatelessWidget {
           controller.currentPage = value;
         },
         controller: controller.pageController,
-        children: [First(), Second(), Third()],
+        children: [First(), Second()],
       ),
     );
   }

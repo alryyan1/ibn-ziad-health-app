@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MainIcon extends StatelessWidget {
   MainIcon({
     super.key,
     required name,
-    required icon,
+    required picture,
     required String page,
     this.args,
   })  : _name = name,
-        _icon = icon,
+        _picture = picture,
         _page = page;
   Object? args;
 
   String _name;
-  Widget _icon;
+  SvgPicture _picture;
   String _page;
 
   @override
@@ -25,31 +26,34 @@ class MainIcon extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.black38,
+              gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 160, 225, 162),
+                Color.fromARGB(255, 85, 127, 65)
+              ]),
+              borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    offset: Offset(-3, 5),
-                    blurRadius: 2,
-                    spreadRadius: 1)
-              ],
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(20)),
-          width: 35,
-          height: 35,
+                    color: Colors.green,
+                    blurRadius: 3,
+                    spreadRadius: 2,
+                    offset: Offset(-2, 4))
+              ]),
+          width: 45,
+          height: 45,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _icon,
+                _picture,
                 SizedBox(
                   height: 10,
                 ),
                 FittedBox(
                   child: Text(
                     _name,
-                    style: TextStyle(fontSize: 18),
+                    style:
+                        TextStyle(fontSize: 18, fontFamily: 'Tajawal-Regular'),
                   ),
                 )
               ],
