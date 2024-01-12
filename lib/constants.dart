@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:ibnziad/doctor_clinc.dart';
+import 'labprices.dart';
 import 'home.dart';
 import 'main.dart';
 import 'on-boarding/first_page.dart';
+import 'clinics.dart';
 
 ThemeData theme = ThemeData().copyWith(
   appBarTheme: AppBarTheme(
@@ -16,6 +18,13 @@ ThemeData theme = ThemeData().copyWith(
 );
 
 List<GetPage> pages = [
+  GetPage(
+    name: Clinics.route,
+    page: () {
+      return Clinics();
+    },
+  ),
+  
   GetPage(
     name: '/home',
     page: () {
@@ -34,4 +43,21 @@ List<GetPage> pages = [
       return First();
     },
   ),
+  GetPage(
+    name: LabPrices.route,
+    page: () {
+      return LabPrices();
+    },
+  ),
 ];
+
+// const host = 'alphalab.eu.ngrok.io';
+const schema = 'http';
+// const host = '192.168.78.108';
+const host = '192.168.43.230';
+const api = "/projects/bootstraped/new/api.php";
+const base = "/projects/bootstraped/new/";
+const register_page = "/note_app/singup.php";
+const lab_api = "/projects/bootstraped/new/App/Views/Api/lab.php";
+const clinic_api = "/projects/bootstraped/new/App/Views/Api/clinic.php";
+const clinic_report = "/projects/bootstraped/new/App/Reports/clinic_report.php";

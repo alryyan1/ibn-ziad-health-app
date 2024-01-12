@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ibnziad/labprices.dart';
 import 'main_icon.dart';
 import 'package:get/get.dart';
+import 'clinics.dart';
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -15,9 +17,9 @@ class Home extends StatelessWidget {
             width: 50,
             height: 50,
           ),
-          page: '/prices'),
+          page: LabPrices.route),
       MainIcon(
-        page: '/clincs',
+        page: Clinics.route,
         name: 'العيادات'.tr,
         picture: SvgPicture.asset('assets/svgs/1.svg', width: 50, height: 50),
       ),
