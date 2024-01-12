@@ -73,7 +73,7 @@ class Second extends StatelessWidget {
                   print('clicked');
                   Get.offNamed('/home');
                 },
-                child: const Text('الرئيسيه'),
+                child:  Text('الرئيسيه'.tr),
               ),
             )
           ],

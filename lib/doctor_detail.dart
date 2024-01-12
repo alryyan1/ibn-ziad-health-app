@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class DoctorDetails extends StatelessWidget {
-   DoctorDetails({super.key,required this.name,required this.specialist_name});
-   String name;
-   String specialist_name;
+  DoctorDetails(
+      {super.key,
+      required this.name,
+      required this.specialist_name,
+      required this.ismale});
+  String name;
+  String specialist_name;
+  bool ismale;
   @override
   Widget build(BuildContext context) {
+    var image_name = this.ismale ? 'male' : 'female';
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.9),
       body: SafeArea(
@@ -21,7 +27,7 @@ class DoctorDetails extends StatelessWidget {
                 height: 20,
               ),
               SvgPicture.asset(
-                'assets/svgs/femaledoctor.svg',
+                'assets/svgs/${image_name}doctor.svg',
                 width: 200,
                 height: 200,
               ),
@@ -45,7 +51,7 @@ class DoctorDetails extends StatelessWidget {
                 height: 30,
               ),
               Text(
-              specialist_name,
+                specialist_name,
                 style: TextStyle(
                     fontFamily: 'Tajawal-Regular',
                     fontSize: 26,

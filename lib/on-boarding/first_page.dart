@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ibnziad/controllers/OnBoardPageController.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class First extends StatelessWidget {
   const First({super.key});
@@ -39,9 +39,21 @@ class First extends StatelessWidget {
             SizedBox(
               height: 70,
             ),
-            Text('مرحبا بكم في مركز ابن زياد الطبي'.tr,
+            AnimatedTextKit(
+              totalRepeatCount: 1,
+              animatedTexts: [
+                
+              TyperAnimatedText(
+
+                speed: Duration(milliseconds: 200),
+                'مرحبا بكم في مركز ابن زياد الطبي'.tr,
+                textStyle: TextStyle(
+                  fontFamily: 'Tajawal-Regular',
+                  fontSize: 30,
+                ),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 30)),
+              )
+            ]),
             const Spacer(),
             Container(
               height: 55,
@@ -57,7 +69,7 @@ class First extends StatelessWidget {
                   print(controller.currentPage);
                   controller.next();
                 },
-                child:  Text('التالي'.tr),
+                child: Text('التالي'.tr),
               ),
             )
           ],

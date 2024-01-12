@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ibnziad/doctor_clinc.dart';
+import 'package:ibnziad/add_test.dart';
 import 'labprices.dart';
 import 'home.dart';
 import 'main.dart';
 import 'on-boarding/first_page.dart';
 import 'clinics.dart';
+import 'settings.dart';
+import 'add_clinic.dart';
 
 ThemeData theme = ThemeData().copyWith(
   appBarTheme: AppBarTheme(
@@ -13,18 +15,37 @@ ThemeData theme = ThemeData().copyWith(
       titleTextStyle: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 20)),
   scaffoldBackgroundColor: Color.fromARGB(255, 31, 143, 57),
   textTheme: TextTheme(
+    bodyMedium:
+        TextStyle(color: Color.fromARGB(255, 246, 245, 244), fontSize: 18),
     displaySmall: TextStyle(fontFamily: 'Cairo-Regular'),
   ),
 );
 
 List<GetPage> pages = [
   GetPage(
+    name: AddClinic.route,
+    page: () {
+      return AddClinic();
+    },
+  ),
+  GetPage(
+    name: AddTest.route,
+    page: () {
+      return AddTest();
+    },
+  ),
+  GetPage(
+    name: Settings.route,
+    page: () {
+      return Settings();
+    },
+  ),
+  GetPage(
     name: Clinics.route,
     page: () {
       return Clinics();
     },
   ),
-  
   GetPage(
     name: '/home',
     page: () {

@@ -43,91 +43,77 @@ class LabPrices extends StatelessWidget {
     print(labCollection);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('أسعار المعمل'),
       ),
       body: Container(
-        child: ListView(
-          children: [
-            // ElevatedButton(
-            //   onPressed: add,
-            //   child: Text('populate'),
-            // ),
-            // ElevatedButton(
-            //   onPressed: delete,
-            //   style: ButtonStyle(
-            //       backgroundColor:
-            //           MaterialStateColor.resolveWith((states) => Colors.red)),
-            //   child: Text('delete'),
-            // ),
-            StreamBuilder(
-              stream: labCollection.orderBy('id').snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('error occured');
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+        child: StreamBuilder(
+          stream: labCollection.orderBy('id').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Text('error occured');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    var data = snapshot.data!.docs[index].data();
+            return ListView.builder(
+              shrinkWrap: true,
+              primary: false,
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                var data = snapshot.data!.docs[index].data();
 
-                    return Slidable(
-                        // Specify a key if the Slidable is dismissible.
-                        key: ValueKey(data.id.toString()),
+                return Slidable(
+                    // Specify a key if the Slidable is dismissible.
+                    key: ValueKey(data.id.toString()),
 
-                        // The start action pane is the one at the left or the top side.
-                        startActionPane: ActionPane(
-                          // A motion is a widget used to control how the pane animates.
-                          motion: const ScrollMotion(),
+                    // The start action pane is the one at the left or the top side.
+                    startActionPane: ActionPane(
+                      // A motion is a widget used to control how the pane animates.
+                      motion: const ScrollMotion(),
 
-                          // A pane can dismiss the Slidable.
-                          dismissible: DismissiblePane(onDismissed: () {
+                      // A pane can dismiss the Slidable.
+                      dismissible: DismissiblePane(onDismissed: () {
+                        labCollection
+                            .where('id', isEqualTo: data.id)
+                            .get()
+                            .then((querysnapshots) {
+                          querysnapshots.docs.forEach((test) {
                             labCollection
-                                .where('id', isEqualTo: data.id)
-                                .get()
-                                .then((querysnapshots) {
-                              querysnapshots.docs.forEach((test) {
-                                labCollection
-                                    .doc(querysnapshots.docs[0].id)
-                                    .delete();
-                              });
-                            });
-                          }),
+                                .doc(querysnapshots.docs[0].id)
+                                .delete();
+                          });
+                        });
+                      }),
 
-                          // All actions are defined in the children parameter.
-                          children: [
-                            // A SlidableAction can have an icon and/or a label.
-                            SlidableAction(
-                              onPressed: (context) {},
-                              backgroundColor: Color(0xFFFE4A49),
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete,
-                              label: 'Delete',
-                            ),
-                          ],
+                      // All actions are defined in the children parameter.
+                      children: [
+                        // A SlidableAction can have an icon and/or a label.
+                        SlidableAction(
+                          onPressed: (context) {},
+                          backgroundColor: Color(0xFFFE4A49),
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Delete',
                         ),
+                      ],
+                    ),
 
-                        // The child of the Slidable is what the user sees when the
-                        // component is not dragged.
-                        child: ListTile(
-                          tileColor: index.isEven
-                              ? Theme.of(context).scaffoldBackgroundColor
-                              : Color.fromARGB(159, 115, 162, 103),
-                          title: Text(data.name),
-                          trailing: Text(data.price.toString()),
-                        ));
-                  },
-                );
+                    // The child of the Slidable is what the user sees when the
+                    // component is not dragged.
+                    child: ListTile(
+                      tileColor: index.isEven
+                          ? Theme.of(context).scaffoldBackgroundColor
+                          : Color.fromARGB(159, 115, 162, 103),
+                      title: Text(data.name),
+                      trailing: Text(data.price.toString()),
+                    ));
               },
-            )
-          ],
+            );
+          },
         ),
       ),
     );

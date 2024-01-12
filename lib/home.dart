@@ -4,6 +4,8 @@ import 'package:ibnziad/labprices.dart';
 import 'main_icon.dart';
 import 'package:get/get.dart';
 import 'clinics.dart';
+import 'settings.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -24,9 +26,10 @@ class Home extends StatelessWidget {
         picture: SvgPicture.asset('assets/svgs/1.svg', width: 50, height: 50),
       ),
       MainIcon(
-          name: 'المعرض'.tr,
-          picture: SvgPicture.asset('assets/svgs/1.svg', width: 50, height: 50),
-          page: '/prices'),
+          name: 'الموقع'.tr,
+          picture: SvgPicture.asset('assets/svgs/location.svg',
+              width: 50, height: 50),
+          page: '/location'),
       MainIcon(
           picture: SvgPicture.asset('assets/svgs/contact.svg',
               width: 50, height: 50),
@@ -36,6 +39,11 @@ class Home extends StatelessWidget {
           name: 'العروض'.tr,
           picture: SvgPicture.asset('assets/svgs/1.svg', width: 50, height: 50),
           page: '/prices'),
+      MainIcon(
+          name: 'الاعدادات'.tr,
+          picture: SvgPicture.asset('assets/svgs/settings.svg',
+              width: 50, height: 50),
+          page: Settings.route),
     ];
     return Scaffold(
       appBar: AppBar(

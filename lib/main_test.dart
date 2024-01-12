@@ -19,7 +19,7 @@ class MainTest {
   });
 
   factory MainTest.fromJson(Map<String, dynamic>? json) {
-    var price = json!['price'] == false ? 0 : (json['price'] as int);
+    var price = json!['price'] == false ? 0 : (int.parse(json['price']) );
 
     return MainTest(
       id: json['id'],

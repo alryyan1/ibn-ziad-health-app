@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ibnziad/doctor_clinc.dart';
+import 'package:ibnziad/doctor_detail.dart';
 import 'package:ibnziad/export.dart';
 
 class Clinics extends StatelessWidget {
@@ -36,6 +36,7 @@ class Clinics extends StatelessWidget {
                       Get.to(DoctorDetails(
                         name: data['doctor_name'],
                         specialist_name: data['specialist_name'],
+                        ismale: data['male'] ,
                       ));
                     },
                     child: Card(
