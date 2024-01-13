@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 
-
 class MainTest {
-  int   id;
-  String  name;
-  int  price;
-  int?  pack_id;
-  int?  container_id;
-  bool  loading = false;
+  int id;
+  String name;
+  int price;
+  int? pack_id;
+  int? container_id;
+  bool loading = false;
   MainTest({
     required this.id,
     required this.container_id,
@@ -19,7 +18,10 @@ class MainTest {
   });
 
   factory MainTest.fromJson(Map<String, dynamic>? json) {
-    var price = json!['price'] == false ? 0 : (int.parse(json['price']) );
+    var price = json!['price'] == false ? 0 : json['price'];
+    if (price is String) {
+      price = int.parse(price);
+    }
 
     return MainTest(
       id: json['id'],
@@ -66,7 +68,7 @@ class MainTest {
   @override
   String toString() => name;
 
-  Map<String,Object?>   toJson() {
+  Map<String, Object?> toJson() {
     return {
       'id': this.id,
       'main_test_name': this.name,

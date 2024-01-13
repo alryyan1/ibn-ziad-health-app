@@ -8,15 +8,28 @@ import 'on-boarding/first_page.dart';
 import 'clinics.dart';
 import 'settings.dart';
 import 'add_clinic.dart';
+import 'contact-us.dart';
+import 'language.dart';
 
 ThemeData theme = ThemeData().copyWith(
+  dropdownMenuTheme:
+      DropdownMenuThemeData(textStyle: TextStyle(color: Colors.white)),
+  inputDecorationTheme:
+      InputDecorationTheme(labelStyle: TextStyle(color: Colors.white)),
   appBarTheme: AppBarTheme(
       backgroundColor: Colors.lightGreen,
       titleTextStyle: TextStyle(fontFamily: 'Tajawal-Regular', fontSize: 20)),
   scaffoldBackgroundColor: Color.fromARGB(255, 31, 143, 57),
   textTheme: TextTheme(
-    bodyMedium:
-        TextStyle(color: Color.fromARGB(255, 246, 245, 244), fontSize: 18),
+    displayLarge: TextStyle(color: Colors.black),
+    headlineLarge: TextStyle(color: Colors.black),
+    labelLarge: TextStyle(color: Colors.black),
+    bodyLarge: TextStyle(color: Colors.black),
+    titleSmall: TextStyle(color: Colors.black),
+    titleMedium: TextStyle(color: Colors.black),
+    headlineSmall: TextStyle(color: Colors.black),
+    bodySmall: TextStyle(color: Colors.black),
+    bodyMedium: TextStyle(fontSize: 18),
     displaySmall: TextStyle(fontFamily: 'Cairo-Regular'),
   ),
 );
@@ -47,6 +60,12 @@ List<GetPage> pages = [
     },
   ),
   GetPage(
+    name: LanguageSettings.route,
+    page: () {
+      return LanguageSettings();
+    },
+  ),
+  GetPage(
     name: '/home',
     page: () {
       return Home();
@@ -68,6 +87,12 @@ List<GetPage> pages = [
     name: LabPrices.route,
     page: () {
       return LabPrices();
+    },
+  ),
+  GetPage(
+    name: ContactUs.route,
+    page: () {
+      return ContactUs();
     },
   ),
 ];

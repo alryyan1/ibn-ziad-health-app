@@ -12,6 +12,8 @@ class AddClinic extends StatefulWidget {
 }
 
 class _AddClinicState extends State<AddClinic> {
+  bool isloading = false;
+
   var nameControllr = TextEditingController();
   var specialistController = TextEditingController();
   var formkey = GlobalKey<FormState>();
@@ -37,17 +39,25 @@ class _AddClinicState extends State<AddClinic> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SvgPicture.asset(
-                  'assets/svgs/positive.svg',
-                  width: 200,
-                  height: 200,
+                Hero(
+                  tag: 'عياده جديده',
+                  child: SvgPicture.asset(
+                    'assets/svgs/add_clinic.svg',
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
-                Text(
-                  'اضافه عياده جديده'.tr,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(fontFamily: 'Cairo-Regular'),
+                SizedBox(
+                  height: 20,
+                ),
+                FittedBox(
+                  child: Text(
+                    'اضافه عياده جديده'.tr,
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(fontFamily: 'Tajawal-Regular'),
+                  ),
                 ),
                 TextFormField(
                   validator: (value) {
@@ -77,7 +87,7 @@ class _AddClinicState extends State<AddClinic> {
                   items: [
                     DropdownMenuItem(
                       child: Text(
-                        'ذكر',
+                        'ذكر'.tr,
                         style: TextStyle(color: Colors.black),
                       ),
                       value: 1,
@@ -96,40 +106,56 @@ class _AddClinicState extends State<AddClinic> {
                     });
                   },
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      if (formkey.currentState!.validate()) {
-                        var lastId = 0;
-                        var collection =
-                            FirebaseFirestore.instance.collection('clinics');
-                        var snpshots = await collection
-                            .orderBy('id', descending: true)
-                            .get();
-                        if (snpshots.docs.length == 0) {
-                          lastId = 1;
-                        } else {
-                          lastId = int.parse(snpshots.docs[0].data()['id']);
-                        }
+                Container(
+                  width: 200,
+                  child: ElevatedButton(
+                      onPressed: isloading
+                          ? null
+                          : () async {
+                              if (formkey.currentState!.validate()) {
+                                setState(() {
+                                  isloading = true;
+                                });
+                                var lastId = 0;
+                                var collection = FirebaseFirestore.instance
+                                    .collection('clinics');
+                                var snpshots = await collection
+                                    .orderBy('id', descending: true)
+                                    .get();
+                                if (snpshots.docs.length == 0) {
+                                  lastId = 1;
+                                } else {
+                                  lastId =
+                                      int.parse(snpshots.docs[0].data()['id']);
+                                }
 
-                        lastId = lastId + 1;
-                        print(lastId);
-                        var fd = await collection.add({
-                          'doctor_name': nameControllr.text,
-                          'specialist_name': specialistController.text,
-                          'male': gender == 1,
-                          'id': lastId
-                        });
+                                lastId = lastId + 1;
+                                print(lastId);
+                                var fd = await collection.add({
+                                  'doctor_name': nameControllr.text,
+                                  'specialist_name': specialistController.text,
+                                  'male': gender == 1,
+                                  'id': lastId
+                                });
 
-                        Get.showSnackbar(GetSnackBar(
-                          duration: Duration(milliseconds: 2000),
-                          messageText: Text(
-                            'تمت العمليه بنجاح',
-                            textAlign: TextAlign.center,
-                          ),
-                        ));
-                      }
-                    },
-                    child: Text('حفظ'.tr))
+                                setState(() {
+                                  isloading = false;
+                                });
+                                Get.showSnackbar(GetSnackBar(
+                                  messageText: Text(
+                                    'تم الحفظ بنجاح',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                  titleText: Text(
+                                    'نجاح',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ));
+                              }
+                            },
+                      child: Text('حفظ'.tr)),
+                )
               ],
             ),
           ),

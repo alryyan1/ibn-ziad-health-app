@@ -3,26 +3,33 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MainIcon extends StatelessWidget {
-  MainIcon({
-    super.key,
-    required name,
-    required picture,
-    required String page,
-    this.args,
-  })  : _name = name,
+  MainIcon(
+      {super.key,
+      required name,
+      required picture,
+      required String page,
+      this.args,
+      this.doSomethings})
+      : _name = name,
         _picture = picture,
         _page = page;
   Object? args;
 
+  Function? doSomethings;
   String _name;
   SvgPicture _picture;
   String _page;
+  
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          Get.toNamed(_page, arguments: args);
+          if (this.doSomethings != null) {
+            doSomethings!(context);
+          } else {
+            Get.toNamed(_page, arguments: args);
+          }
         },
         child: Container(
           decoration: BoxDecoration(
@@ -45,7 +52,7 @@ class MainIcon extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _picture,
+                 Hero(tag: _name, child: _picture) ,
                 SizedBox(
                   height: 10,
                 ),

@@ -4,7 +4,7 @@ class AppTranslator extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en': {
-          'مركز ابن زياد الطبي':'Ibn Zyad Medical Center',
+          'مركز ابن زياد الطبي': 'Ibn Zyad Medical Center',
           'مركز ابن زياد': 'Ibn Zyad Clinc Center',
           'مرحبا بكم في مركز ابن زياد الطبي':
               'Welcome to Ibn Ziyad Medical Center',
@@ -31,10 +31,19 @@ class AppTranslator extends Translations {
           'اضافه عياده جديده': 'Add new clinic',
           'اسم الطبيب': 'Name',
           'الاختصاص': 'Specialist',
-          'يجب ان يكون الاسم موجود':'name must be present',
-          'يجب ان يكون التخصص موجود':'specialist name must be present',
-          'يجب ادخال اسم الفحص':'value must be included',
-          'يجب ادخال سعر الفحص':'value must be included'
+          'يجب ان يكون الاسم موجود': 'name must be present',
+          'يجب ان يكون التخصص موجود': 'specialist name must be present',
+          'يجب ادخال اسم الفحص': 'value must be included',
+          'يجب ادخال سعر الفحص': 'value must be included',
+          'انشاء قاعده تحاليل علي سحابه قوقل':
+              'generate laboratory tests in google cloud',
+          'مسح بيانات': 'wipe laboratory cloud data',
+          'اللغه': 'language',
+          'اختار اللغه المفضله': 'choose your prefered language',
+          'ذكر': 'male',
+          'بحث': 'search',
+          'أسعار المعمل': 'Lab Test Price',
+          'عن التطبيق': 'About'
         },
       };
 }

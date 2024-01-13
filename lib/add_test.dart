@@ -12,6 +12,7 @@ class AddTest extends StatefulWidget {
 }
 
 class _AddTestState extends State<AddTest> {
+  bool isloading = false;
   var nameControllr = TextEditingController();
   var priceController = TextEditingController();
   var formkey = GlobalKey<FormState>();
@@ -35,10 +36,13 @@ class _AddTestState extends State<AddTest> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SvgPicture.asset(
-                  'assets/svgs/positive.svg',
-                  width: 200,
-                  height: 200,
+                Hero(
+                  tag: 'اضافه فحص',
+                  child: SvgPicture.asset(
+                    'assets/svgs/add_test.svg',
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
                 Text(
                   'اضافه فحص جديد'.tr,
@@ -57,7 +61,14 @@ class _AddTestState extends State<AddTest> {
                   onFieldSubmitted: (value) {
                     FocusScope.of(context).requestFocus(priceNode);
                   },
-                  decoration: InputDecoration(label: Text('اسم الفحص'.tr)),
+                  decoration: InputDecoration(
+                      errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.pink)),
+                      border: UnderlineInputBorder(),
+                      label: Text('اسم الفحص'.tr)),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 TextFormField(
                   validator: (value) {
@@ -68,34 +79,75 @@ class _AddTestState extends State<AddTest> {
                   controller: priceController,
                   focusNode: priceNode,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(label: Text('السعر'.tr)),
+                  decoration: InputDecoration(
+                      focusColor: Colors.purple,
+                      errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.pink)),
+                      border: UnderlineInputBorder(),
+                      label: Text('السعر'.tr)),
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      if (formkey.currentState!.validate()) {
-                        var lastId = 0;
-                        var collection =
-                            FirebaseFirestore.instance.collection('tests');
-                        var snpshots = await collection
-                            .orderBy('id', descending: true)
-                            .get();
-                        if (snpshots.docs.length == 0) {
-                          lastId = 1;
-                        } else {
-                          lastId = snpshots.docs[0].data()['id'] ?? 0;
-                        }
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  width: 200,
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.resolveWith(
+                              (states) => EdgeInsets.all(10)),
+                          backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color.fromARGB(255, 27, 223, 33))),
+                      onPressed: isloading
+                          ? null
+                          : () async {
+                              if (formkey.currentState!.validate()) {
+                                setState(() {
+                                  isloading = true;
+                                });
+                                var lastId = 0;
+                                var collection = FirebaseFirestore.instance
+                                    .collection('tests');
+                                var snpshots = await collection
+                                    .orderBy('id', descending: true)
+                                    .get();
+                                if (snpshots.docs.length == 0) {
+                                  lastId = 1;
+                                } else {
+                                  lastId = snpshots.docs[0].data()['id'] ?? 0;
+                                }
 
-                        lastId = lastId + 1;
-                        print(lastId);
-                        var document = await collection.add({
-                          'main_test_name': nameControllr.text,
-                          'price': priceController.text,
-                          'available': true,
-                          'id': lastId
-                        });
-                      }
-                    },
-                    child: Text('حفظ'.tr))
+                                lastId = lastId + 1;
+                                print(lastId);
+
+                                var document = await collection.add({
+                                  'main_test_name': nameControllr.text,
+                                  'price': priceController.text,
+                                  'available': true,
+                                  'id': lastId
+                                });
+
+                                setState(() {
+                                  isloading = false;
+                                });
+                                Get.showSnackbar(GetSnackBar(
+                                  messageText: Text(
+                                    'تم الحفظ بنجاح',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                  titleText: Text(
+                                    'نجاح',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ));
+                              }
+                            },
+                      child: isloading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text('حفظ'.tr)),
+                )
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ibnziad/controllers/OnBoardPageController.dart';
@@ -39,12 +40,8 @@ class First extends StatelessWidget {
             SizedBox(
               height: 70,
             ),
-            AnimatedTextKit(
-              totalRepeatCount: 1,
-              animatedTexts: [
-                
+            AnimatedTextKit(totalRepeatCount: 1, animatedTexts: [
               TyperAnimatedText(
-
                 speed: Duration(milliseconds: 200),
                 'مرحبا بكم في مركز ابن زياد الطبي'.tr,
                 textStyle: TextStyle(
@@ -64,7 +61,9 @@ class First extends StatelessWidget {
                   backgroundColor:
                       MaterialStateColor.resolveWith((states) => Colors.green),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  
+               
                   print('init');
                   print(controller.currentPage);
                   controller.next();
