@@ -10,6 +10,7 @@ import 'settings.dart';
 import 'add_clinic.dart';
 import 'contact-us.dart';
 import 'language.dart';
+import 'add_specialist.dart';
 
 ThemeData theme = ThemeData().copyWith(
   dropdownMenuTheme:
@@ -35,6 +36,12 @@ ThemeData theme = ThemeData().copyWith(
 );
 
 List<GetPage> pages = [
+  GetPage(
+    name: AddSpecialist.route,
+    page: () {
+      return AddSpecialist();
+    },
+  ),
   GetPage(
     name: AddClinic.route,
     page: () {

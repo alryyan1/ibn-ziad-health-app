@@ -9,12 +9,16 @@ class MainTest {
   int? pack_id;
   int? container_id;
   bool loading = false;
+  String translation;
+  String terms;
   MainTest({
     required this.id,
     required this.container_id,
     required this.name,
     required this.pack_id,
     required this.price,
+    required this.translation,
+    required this.terms
   });
 
   factory MainTest.fromJson(Map<String, dynamic>? json) {
@@ -29,6 +33,8 @@ class MainTest {
       name: json['main_test_name'],
       pack_id: json['pack_id'],
       price: price,
+      translation:  json['translation'],
+      terms:  json['terms']
     );
   }
 
@@ -74,6 +80,8 @@ class MainTest {
       'main_test_name': this.name,
       'price': this.price,
       'available': true,
+      'translation': this.translation,
+      'terms': this.terms,
     };
   }
 }

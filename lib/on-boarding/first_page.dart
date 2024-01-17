@@ -20,21 +20,19 @@ class First extends StatelessWidget {
           // crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'مركز ابن زياد'.tr,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
             SizedBox(
               height: 70,
             ),
             Container(
               height: 200,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage("assets/images/2.png"),
-                  fit: BoxFit.contain,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image(
+                  image: AssetImage("assets/images/1024.png"),
                 ),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
             SizedBox(
@@ -62,8 +60,6 @@ class First extends StatelessWidget {
                       MaterialStateColor.resolveWith((states) => Colors.green),
                 ),
                 onPressed: () async {
-                  
-               
                   print('init');
                   print(controller.currentPage);
                   controller.next();

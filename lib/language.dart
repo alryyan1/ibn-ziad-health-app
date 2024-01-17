@@ -24,7 +24,7 @@ class LanguageSettings extends StatelessWidget {
                   ElevatedButton(
                     child: Text('العربيه'),
                     onPressed: () {
-                      Get.updateLocale(Locale('ar', 'Sa'));
+                      Get.updateLocale(Locale('ar', 'US'));
                     },
                   ),
                   ElevatedButton(

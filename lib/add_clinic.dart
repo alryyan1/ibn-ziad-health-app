@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ibnziad/specialistController.dart';
 
 class AddClinic extends StatefulWidget {
   static const route = '/addclinic';
@@ -26,10 +29,20 @@ class _AddClinicState extends State<AddClinic> {
     super.dispose();
   }
 
+  int selectedSpecialist = 1;
   int gender = 1;
+  List<Map> dropList = [];
+  List<DropdownMenuItem> dropDownList = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SpecialistController());
+
     return Scaffold(
         body: Container(
       padding: EdgeInsets.all(10),
@@ -71,16 +84,43 @@ class _AddClinicState extends State<AddClinic> {
                   },
                   decoration: InputDecoration(label: Text('اسم الطبيب'.tr)),
                 ),
-                TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'يجب ان يكون التخصص موجود'.tr;
-                    }
-                  },
-                  controller: specialistController,
-                  focusNode: specialistNode,
-                  decoration: InputDecoration(label: Text('الاختصاص'.tr)),
+                SizedBox(
+                  height: 10,
                 ),
+                Container(
+                    width: double.infinity,
+                    child: Text(
+                      'التخصص'.tr,
+                      textAlign: TextAlign.start,
+                    )),
+                GetBuilder<SpecialistController>(
+                  init: SpecialistController(),
+                  builder: (controller) {
+                    return controller.isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : DropdownButton(
+                            isExpanded: true,
+                            value: controller.selected,
+                            items: controller.list.map((e) {
+                              return DropdownMenuItem<int>(
+                                child: Text(e['name']),
+                                value: e['id'],
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              controller.updateSelected(value);
+                            },
+                          );
+                  },
+                ),
+                Container(
+                    width: double.infinity,
+                    child: Text(
+                      'النوع'.tr,
+                      textAlign: TextAlign.start,
+                    )),
                 DropdownButton(
                   value: gender,
                   isExpanded: true,
@@ -94,7 +134,7 @@ class _AddClinicState extends State<AddClinic> {
                     ),
                     DropdownMenuItem(
                       child: Text(
-                        'انثي',
+                        'انثي'.tr,
                         style: TextStyle(color: Colors.black),
                       ),
                       value: 2,
@@ -106,9 +146,15 @@ class _AddClinicState extends State<AddClinic> {
                     });
                   },
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   width: 200,
                   child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color.fromARGB(255, 112, 231, 22))),
                       onPressed: isloading
                           ? null
                           : () async {
@@ -125,21 +171,30 @@ class _AddClinicState extends State<AddClinic> {
                                 if (snpshots.docs.length == 0) {
                                   lastId = 1;
                                 } else {
-                                  lastId =
-                                      int.parse(snpshots.docs[0].data()['id']);
+                                  lastId = snpshots.docs[0].data()['id'];
                                 }
 
                                 lastId = lastId + 1;
-                                print(lastId);
+                                // print(lastId);,
+                                var qsnapShot = await FirebaseFirestore.instance
+                                    .collection('specialists')
+                                    .where('id', isEqualTo: Get.find<SpecialistController>().selected)
+                                    .get();
+                                var specialistObj = qsnapShot.docs[0].data();
+
                                 var fd = await collection.add({
                                   'doctor_name': nameControllr.text,
-                                  'specialist_name': specialistController.text,
+                                  'specialist': specialistObj,
                                   'male': gender == 1,
                                   'id': lastId
                                 });
 
                                 setState(() {
                                   isloading = false;
+                                });
+                                setState(() {
+                                  nameControllr.text = '';
+                                  specialistController.text = '';
                                 });
                                 Get.showSnackbar(GetSnackBar(
                                   messageText: Text(
@@ -154,7 +209,11 @@ class _AddClinicState extends State<AddClinic> {
                                 ));
                               }
                             },
-                      child: Text('حفظ'.tr)),
+                      child: isloading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Text('حفظ'.tr)),
                 )
               ],
             ),

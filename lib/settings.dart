@@ -6,6 +6,7 @@ import 'add_clinic.dart';
 import 'main_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'language.dart';
+import 'add_specialist.dart';
 class Settings extends StatelessWidget {
   const Settings({super.key});
   static const route = '/settings';
@@ -50,6 +51,12 @@ class Settings extends StatelessWidget {
           picture: SvgPicture.asset('assets/svgs/add_clinic.svg',
               width: 50, height: 50),
           page: AddClinic.route),
+          
+      MainIcon(
+          name: 'تخصص جديد'.tr,
+          picture: SvgPicture.asset('assets/svgs/add_clinic.svg',
+              width: 50, height: 50),
+          page: AddSpecialist.route),
       MainIcon(
           name: 'اللغه'.tr,
           picture: SvgPicture.asset('assets/svgs/settings.svg',

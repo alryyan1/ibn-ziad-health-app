@@ -54,8 +54,6 @@ class Home extends StatelessWidget {
 
   showAboutPage(context) {
     showLicensePage(
-      
-      
         context: context,
         applicationIcon: SvgPicture.asset(
           'assets/svgs/about.svg',
@@ -92,7 +90,7 @@ class Home extends StatelessWidget {
           page: ContactUs.route),
       MainIcon(
           doSomethings: showAboutPage,
-          name: 'عن التطبيق'.tr,
+          name: 'حول التطبيق'.tr,
           picture:
               SvgPicture.asset('assets/svgs/about.svg', width: 50, height: 50),
           page: '/prices'),
